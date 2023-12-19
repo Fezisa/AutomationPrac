@@ -14,10 +14,19 @@ describe('AutomationPrac', () => {
     cy.get('#radio-btn-example fieldset [value="radio3"]').click()
     //cy.wait(1000)
 
+    // Validate that only 1 radio button is checked
+    cy.get('#radio-btn-example fieldset [value="radio3"]').should('be.checked')
+    cy.get('#radio-btn-example fieldset [value="radio2"]').should('not.be.checked')
+    cy.get('#radio-btn-example fieldset [value="radio1"]').should('not.be.checked')
+
     // Click on radio button 2 
     cy.get('#radio-btn-example fieldset [value="radio2"]').click()
     //cy.wait(1000)  
 
+    // Validate that only 1 radio button is checked
+    cy.get('#radio-btn-example fieldset [value="radio2"]').should('be.checked')
+    cy.get('#radio-btn-example fieldset [value="radio3"]').should('not.be.checked')
+    cy.get('#radio-btn-example fieldset [value="radio1"]').should('not.be.checked')
   })
 
 
@@ -50,17 +59,28 @@ describe('AutomationPrac', () => {
 
     // Check all the checkboxes
     cy.get('fieldset label #checkBoxOption1').check()
+    cy.get('fieldset label #checkBoxOption2').check()
+    cy.get('fieldset label #checkBoxOption3').check()
 
     // Validate checkboxes are checked
-
+    cy.get('fieldset label #checkBoxOption1').should('be.checked')
+    cy.get('fieldset label #checkBoxOption2').should('be.checked')
+    cy.get('fieldset label #checkBoxOption3').should('be.checked')
   })
 
   it('TC4 - Validate that remaining checkboxes remain checked - when a checkbox is unchecked ', () => {
+
+    // Check all the checkboxes
+    cy.get('fieldset label #checkBoxOption1').check()
+    cy.get('fieldset label #checkBoxOption2').check()
+    cy.get('fieldset label #checkBoxOption3').check()
 
     // Uncheck the first checkbox
     cy.get('fieldset label #checkBoxOption1').uncheck()
 
     // Validate remaining checkboxes remain checked
+    cy.get('fieldset label #checkBoxOption2').should('be.checked')
+    cy.get('fieldset label #checkBoxOption3').should('be.checked')
 
   })
 
@@ -70,6 +90,7 @@ describe('AutomationPrac', () => {
     cy.get('fieldset [onclick="hideElement()"]').click()
 
     // Validate element is hidden
+    cy.get('fieldset [name="show-hide"]').should('not.be.visible')
 
   })
 
@@ -79,7 +100,7 @@ describe('AutomationPrac', () => {
     cy.get('fieldset [onclick="showElement()"]').click()
 
     // Validate element is shown
-
+    cy.get('fieldset [name="show-hide"]').should('be.visible')
   })
 
 
@@ -98,6 +119,9 @@ describe('AutomationPrac', () => {
   })
 
   it('TC9 - Validate that the sum of all the rows in the Web Table is correct', () => {
+
+    // still investigating below coding issue due to 'sum' variable not bringing the desired data outside for loop, 
+    // function works perfectly this can be tested with a console log but for some reason variable 'sum' will not retain data from in the for loop.
 
     let sum = 0
 
@@ -120,7 +144,7 @@ describe('AutomationPrac', () => {
 
   it('TC10 - Validate that iFrame exists on the page', () => {
 
-
+    // Validate that iFrame exists on the page
     cy.get('#courses-iframe').should('be.visible')
 
   })
@@ -128,7 +152,7 @@ describe('AutomationPrac', () => {
 
   it('TC11 - Interact with an element within iFrame on the page', () => {
 
-
+    // Interact with an element within iFrame
     cy.get('#courses-iframe').then(($iframe) => {
       const $body = $iframe.contents().find('body')
 
